@@ -1,14 +1,12 @@
--- Let's make Assist more personalized
-
-
--- remove GUI.WindowFlags_NoTitleBar if you want the titlebar still. clicking the x button on title bar will disable the button which also allows resizing
+-- remove GUI.WindowFlags_NoTitleBar if you want the titlebar still. clicking the x button on title bar will disable the button.
 _, self.enabled = GUI:Begin("BetterAssist", self.enabled, GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoResize)
---_, self.enabled = GUI:Begin("BetterAssist", self.enabled, GUI.WindowFlags_NoTitleBar)
+--[[ to resize the button, remove:
++ GUI.WindowFlags_NoResize
 
--- this will just tell you if Optifine is not currently installed/running, just a personal thing because I always forget to switch to my raid profile.
---if Optifine == nil then
---    GUI:TextColored(0.8, 0.2, 0, 1, "Optifine Disabled")
---end
+from the line above and save the button, and resize, and add it back. or keep it off. i don't care what you do, that's the beauty of it being customizable.
+]]
+
+
 if ml_global_information.drawMode == 0 then
     ffxivminion.GUI.main.open = false
 end
@@ -17,7 +15,6 @@ end
 local status = "Stopped"
 local r, g, b, a = 0.45, 0, 0, 1
 
--- Handle the case where rPrepull might be nil
 if rPrepull == nil then
     rPrepull = false
 end
@@ -42,7 +39,7 @@ GUI:PushStyleColor(GUI.Col_Button, r, g, b, a)
 GUI:PushStyleColor(GUI.Col_ButtonHovered, r, g, b, a)
 local x = GUI:GetContentRegionAvailWidth()
 if GUI:Button(status, x, 40) then
-    ml_global_information.ToggleRun() -- clicking the button will toggle bot status
+    ml_global_information.ToggleRun()
 end
 if GUI:IsItemClicked(1) then
     ml_global_information.drawMode = 1
@@ -77,8 +74,9 @@ end
 if GUI:Button("Fight Plan", 95, 20) then -- removes items without a gearset from armory chest
     FightPlan.GUI.open = not FightPlan.GUI.open
 end
+GUI:SameLine()
 -- Add the new button to open the ReactionHelper menu
-if GUI:Button("Data GUI", 197, 20) then
+if GUI:Button("Data GUI", 95, 20) then
     ReactionHelper.toggle()
 end
 GUI:End()
